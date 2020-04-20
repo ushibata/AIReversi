@@ -1,9 +1,10 @@
 # BitReversi
 JavaScriptで動くりばーし
-
+![QR](https://ushibata.github.io/AIReversi/qr.png)
 
 
 ## 画面の説明
+![画面](https://ushibata.github.io/AIReversi/board.png)
 #### ❶
 黒石の総数。
 

@@ -5,7 +5,8 @@ JavaScriptで動くりばーし
 
 
 ## 画面の説明
-<img src="https://ushibata.github.io/AIReversi/board.png" width=50%>
+<img src="https://ushibata.github.io/AIReversi/board.png" width=40%>
+
 #### ❶
 黒石の総数。
 

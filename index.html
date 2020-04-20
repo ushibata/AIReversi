@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,user-scalable=no">
+		<title>AIリバーシ</title>
+		
+		
+		<style>
+			*{
+				margin: 0px;
+				padding: 0px;
+				-webkit-touch-callout:none;
+				-webkit-user-select:none;
+			}
+
+			body{
+				background:#ffffff;
+				font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', '游ゴシック  Medium', meiryo, sans-serif;
+				text-align:center;
+				margin: 0px auto;
+
+				width: 95vw;
+				
+				/* マスのmax-widthの9倍*/
+				max-width: 450px;
+			}
+
+			select{
+				-webkit-appearance: none;
+				appearance: none;
+				padding: 0em 0.5em ;
+				border-radius: 9px;
+				border: solid 0.5px #aaa;
+				background: transparent;
+				font-size: 14px;
+                height: 31px;
+				width: 32%;
+				margin: 0px;
+				text-align: center;
+                box-sizing:border-box;
+			}
+
+            div{
+                /*inline-blockのすきまをなくす*/
+                font-size: 0px;
+                box-sizing: border-box;
+            }
+			
+			.black{
+                width: 100%;
+                height: 100%;
+				border-radius: 50%;
+				background: #202020;
+				border: solid 0.5px #202020;
+                transform: scale(0.8, 0.8);
+			}
+
+			.white{
+                width: 100%;
+                height: 100%;
+				border-radius: 50%;
+				background: #f8f8f8;
+				border: solid 0.5px #a0a0a0;
+                transform: scale(0.8, 0.8);
+			}
+
+			.blank{
+				width: 100%;
+				height: 100%;
+			}
+
+			.eval_plus{
+				width: 100%;
+				height: 100%;
+				font-size: 8px;
+				color: #ff0000;
+			}
+			
+			.eval_minus{
+				width: 100%;
+				height: 100%;
+				font-size: 8px;
+				color: #000000;
+			}
+
+			.legal{
+				width: 100%;
+				height: 100%;
+				background: #9f9fff;
+				border-radius: 50%;
+				transform: scale(0.12, 0.12);
+			}
+
+			.lastput{
+				background: #9fff9f;
+			}
+
+			.searching{
+				width: 100%;
+				height: 100%;
+				background: #ff9f9f;
+				border-radius: 50%;
+				transform: scale(0.2, 0.2);
+			}
+            
+			
+            #header{
+                margin: 2% auto;
+            }
+            #black_wrap{
+                display: inline-block;
+                vertical-align: top;
+                background: #daffda;
+                border-radius: 9px;
+                margin: 0% 2% 0% 0%;
+
+				width: 20%;
+            }
+			#black_stone{
+                display: inline-block;
+                vertical-align: top;
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				background: #202020;
+				border: solid 0.5px #202020;
+                
+                transform: scale(0.8, 0.8);
+			}
+			#black_score{
+                display: inline-block;
+                line-height: 31px;
+				width: 30px;
+				height: 30px;
+                vertical-align: top;
+                font-size: 14px;
+			}
+            #white_wrap{
+                display: inline-block;
+                vertical-align: top;
+                background: #daffda;
+                border-radius: 9px;
+                margin: 0% 2% 0% 0%;
+				
+				width: 20%;
+            }
+			#white_stone{
+                display: inline-block;
+                vertical-align: top;
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				background: #f8f8f8;
+				border: solid 0.5px #a0a0a0;
+                
+                transform: scale(0.8, 0.8);
+			}
+			#white_score{
+                display: inline-block;
+                line-height: 31px;
+				width: 30px;
+				height: 30px;
+                vertical-align: top;
+                font-size: 14px;
+			}
+			#comment{
+				background: #daffda;
+				display: inline-block;
+                border-radius: 9px;
+                line-height: 30px;
+                width: 56%;
+				padding: 0px;
+                font-size: 14px;
+                margin: 0px auto;
+			}
+
+			#board{
+				background: #fff;
+			}
+
+			#pass{
+				width: 100%;
+				background: #9fff9f;
+			}
+
+            #test{
+                display: inline-block;
+                width: 95%;
+                margin: 2% auto;
+				position: relative;
+            }
+			.board_box{
+				border: solid 0.5px #aaa;
+                width: 11vw;
+                height: 11vw;
+				vertical-align: top;
+
+				max-width: 50px;
+				max-height: 50px;
+            }
+
+            #footer1{
+                margin: 4px auto;
+            }
+            #switch{
+				width: 32%;
+            }
+            #restart{
+				margin: 2px 2% 2px 2%;
+				width: 32%;
+            }
+            #undo{
+				width: 32%;
+            }
+
+			#footer2{
+                margin: auto;
+            }
+			#setup{
+				margin: 2px 2% 2px 2%;
+				width: 32%;
+			}
+			#disp_reset{
+				width: 32%;
+			}
+
+			#footer3{
+                margin: 4px auto;
+				display: none;
+            }
+            #evaluate{
+				width: 32%;
+            }
+            #loadFromPicture{
+				margin: 2px 2% 2px 2%;
+				width: 32%;
+            }
+            #multiThread{
+				width: 32%;
+            }
+
+            .button{
+				display: inline-block;
+                border-radius: 9px;
+				font-size: 14px;
+				border: solid 0.5px #aaa;
+                line-height: 31px;
+				width: 32%;
+				height: 30px;
+                margin: 0px;
+                
+            }
+            
+		</style>
+		
+	</head>
+	
+	
+	<body>
+        
+        <div id="header">
+            <div id="black_wrap">
+                <div id="black_stone"></div>
+                <div id="black_score"></div>
+            </div>
+            <div id="white_wrap">
+                <div id="white_stone"></div>
+                <div id="white_score"></div>
+            </div>
+            <div id="comment"></div>
+        </div>
+
+        <div id="test">
+		</div>
+
+        <div>
+            <div id="pass" class="button" style="display:none;">pass</div>
+        </div>
+		
+
+        <div id="footer1">
+            <div id="switch" class="button">switch</div>
+            <div id="restart" class="button">restart</div>
+            <div id="undo" class="button">undo</div>
+		</div>
+		
+
+
+		<div id="footer2">
+			<select id="search_depth">
+				<optgroup label="読みの深さ">
+				<option value="1/1/-100/100">1 moves</option>
+				<option value="2/2/-100/100">2 moves</option>
+				<option value="4/4/-100/100">4 moves</option>
+				<option value="4/12/-100/100" selected>4/12 moves</option>
+				<option value="6/12/-100/100">6/12 moves</option>
+				<option value="8/16/-100/100">8/16 moves</option>
+				<option value="8/16/-1/1">8*/16* moves</option>
+				<option value="10/20/-1/1">10*/20* moves</option>
+				</optgroup>
+			</select>
+            <div id="setup" class="button">setup</div>
+            <div id="disp_reset" class="button">reset</div>
+		</div>
+		
+		<div id="footer3">
+			<div id="evaluate" class="button">analyze</div>
+			<div id="loadFromPicture" class="button">load pic</div>
+			<div id="multiThread" class="button">multi</div>
+		</div>
+		
+		<br>
+		<a style="font-size: 12px" target=_blank href="https://github.com/">
+		- 遊び方 -
+		</a>
+		
+		<script src="thread.js"></script>
+		<script src="confirmWindow.js"></script>
+		<script src="data2png.js"></script>
+		<script src="main.js"></script>
+		<script src="board.js"></script>
+		<script src="display.js"></script>
+		<script src="eval.js"></script>
+		<script src="ai.js"></script>
+		<script src="game.js"></script>
+		<script src="initializer.js"></script>
+
+
+		<script src="temp.js"></script>
+		<script src="temp1.js"></script>
+	</body>
+</html>

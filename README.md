@@ -1,6 +1,6 @@
 # BitReversi
 JavaScriptで動くりばーし
-[https://lychnus372.github.io/BitReversi/](https://lychnus372.github.io/BitReversi/)
+[https://ushibata.github.io/AIReversi/](https://ushibata.github.io/AIReversi/)
 
 ![QR](https://ushibata.github.io/AIReversi/qr.png)
 
